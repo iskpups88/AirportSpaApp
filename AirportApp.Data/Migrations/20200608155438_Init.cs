@@ -14,8 +14,7 @@ namespace AirportApp.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Identifier = table.Column<string>(nullable: false),
-                    Model = table.Column<string>(nullable: false),
-                    FlightId = table.Column<int>(nullable: false)
+                    Model = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,7 +61,8 @@ namespace AirportApp.Data.Migrations
                     Surname = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Patronymic = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: false),
+                    BirthDate = table.Column<DateTime>(nullable: false),
+                    Address = table.Column<string>(nullable: true),
                     Series = table.Column<string>(nullable: false),
                     Number = table.Column<string>(nullable: false)
                 },
@@ -102,18 +102,11 @@ namespace AirportApp.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StartDate = table.Column<DateTime>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: false),
-                    AirportId = table.Column<int>(nullable: false),
                     AirportMemberId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AirportMemberSchedules", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AirportMemberSchedules_Airports_AirportId",
-                        column: x => x.AirportId,
-                        principalTable: "Airports",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AirportMemberSchedules_AirportMembers_AirportMemberId",
                         column: x => x.AirportMemberId,
@@ -135,17 +128,17 @@ namespace AirportApp.Data.Migrations
                     Departure = table.Column<DateTime>(nullable: false),
                     Arrival = table.Column<DateTime>(nullable: false),
                     AircraftId = table.Column<int>(nullable: false),
-                    AircraftId1 = table.Column<int>(nullable: true)
+                    AirCompany = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Flights", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Flights_Aircrafts_AircraftId1",
-                        column: x => x.AircraftId1,
+                        name: "FK_Flights_Aircrafts_AircraftId",
+                        column: x => x.AircraftId,
                         principalTable: "Aircrafts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Flights_Airports_AirportFromId",
                         column: x => x.AirportFromId,
@@ -193,20 +186,15 @@ namespace AirportApp.Data.Migrations
                 column: "AircraftId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AirportMemberSchedules_AirportMemberId",
+                name: "IX_AirportMemberSchedules_AirportMemberId_StartDate_EndDate",
                 table: "AirportMemberSchedules",
-                column: "AirportMemberId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AirportMemberSchedules_AirportId_AirportMemberId_StartDate_EndDate",
-                table: "AirportMemberSchedules",
-                columns: new[] { "AirportId", "AirportMemberId", "StartDate", "EndDate" },
+                columns: new[] { "AirportMemberId", "StartDate", "EndDate" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Flights_AircraftId1",
+                name: "IX_Flights_AircraftId",
                 table: "Flights",
-                column: "AircraftId1");
+                column: "AircraftId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Flights_AirportFromId",

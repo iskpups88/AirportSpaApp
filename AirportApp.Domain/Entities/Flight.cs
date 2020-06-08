@@ -11,9 +11,6 @@ namespace AirportApp.Domain.Entities
         public string FlightNumber { get; set; }
 
         [Required]
-        public DateTime Date { get; set; }
-
-        [Required]
         public int AirportFromId { get; set; }
 
         public Airport AirportFrom { get; set; }
@@ -35,5 +32,8 @@ namespace AirportApp.Domain.Entities
         public int AircraftId { get; set; }
 
         public Aircraft Aircraft { get; set; }
+
+        [Required]
+        public string AirCompany { get; set; }
     }
 }

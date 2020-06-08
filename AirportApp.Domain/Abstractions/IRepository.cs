@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using AirportApp.Domain.Entities;
+using AirportApp.Contract.Models;
 using AirportApp.Domain.Entities.Common;
 
 namespace AirportApp.Domain.Abstractions
@@ -17,5 +17,7 @@ namespace AirportApp.Domain.Abstractions
         Task DeleteAsync(int key);
 
         Task<IList<TEntity>> GetListAsync();
+
+        Task<Page<TEntity>> GetPageAsync(PageRequest request);
     }
 }

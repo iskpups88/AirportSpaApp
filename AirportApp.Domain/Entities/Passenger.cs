@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using AirportApp.Domain.Entities.Common;
 
@@ -15,6 +16,8 @@ namespace AirportApp.Domain.Entities
         public string Patronymic { get; set; }
 
         [Required]
+        public DateTime BirthDate { get; set; }
+
         public string Address { get; set; }
 
         [Required]

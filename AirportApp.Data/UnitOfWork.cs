@@ -19,6 +19,7 @@ namespace AirportApp.Data
         }
 
         public IPassengerRepository PassengerRepository => new PassengerRepository(Context, CancellationToken);
+        public IFlightRepository FlightRepository => new FlightRepository(Context, CancellationToken);
 
         public async Task SaveAsync()
         {

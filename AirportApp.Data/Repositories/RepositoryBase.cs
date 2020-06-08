@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using AirportApp.Contract.Models;
+using AirportApp.Data.Extensions;
 using AirportApp.Domain.Abstractions;
 using AirportApp.Domain.Entities.Common;
 using Microsoft.EntityFrameworkCore;
@@ -52,6 +54,11 @@ namespace AirportApp.Data.Repositories
         public async Task<IList<TEntity>> GetListAsync()
         {
             return await DbSet.ToListAsync(CancellationToken);
+        }
+
+        public virtual async Task<Page<TEntity>> GetPageAsync(PageRequest request)
+        {
+            return await DbSet.ToPageAsync(request, CancellationToken);
         }
     }
 }

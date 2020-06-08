@@ -6,6 +6,8 @@ namespace AirportApp.Domain.Abstractions
     {
         IPassengerRepository PassengerRepository { get; }
 
+        IFlightRepository FlightRepository { get; }
+
         Task SaveAsync();
     }
 }

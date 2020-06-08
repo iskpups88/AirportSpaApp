@@ -12,8 +12,7 @@ namespace AirportApp.Domain.Entities
         [Required]
         public string Model { get; set; }
 
-        [Required]
-        public int FlightId { get; set; }
+        public IList<Flight> Flights { get; set; }
 
         public IList<AircraftMember> AircraftMembers { get; set; } = new List<AircraftMember>();
     }

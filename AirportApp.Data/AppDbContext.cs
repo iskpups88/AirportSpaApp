@@ -31,7 +31,7 @@ namespace AirportApp.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<AirportMemberSchedule>()
-                .HasIndex(schedule => new { schedule.AirportId, schedule.AirportMemberId, schedule.StartDate, schedule.EndDate })
+                .HasIndex(schedule => new { schedule.AirportMemberId, schedule.StartDate, schedule.EndDate })
                 .IsUnique();
 
             modelBuilder.Entity<Flight>()
@@ -47,7 +47,7 @@ namespace AirportApp.Data
             //    .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Flight>()
-                .HasIndex(flights => new { flights.FlightNumber, flights.Date })
+                .HasIndex(flights => new { flights.FlightNumber, flights.Departure, flights.Arrival })
                 .IsUnique();
         }
     }

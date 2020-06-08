@@ -1,35 +1,34 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AirportApp.Domain.Abstractions;
+using AirportApp.Contract.Models;
 using AirportApp.Domain.Entities;
+using AirportApp.Domain.Interfaces;
 using AutoFixture;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AirportApp.WebHost.Controllers
+namespace AirportSpaApp.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
     public class PassengerController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private string Location = "api/v1/PassengerController/{0}";
+        private readonly IPassengerService _passengerService;
 
-        public PassengerController(IUnitOfWork unitOfWork)
+        public PassengerController(IPassengerService passengerService)
         {
-            _unitOfWork = unitOfWork;
+            _passengerService = passengerService;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddPassenger(Passenger passenger)
+        [HttpGet("byFlightNumber")]
+        public async Task<IActionResult> Get([FromQuery] PassengersByFlightNumberRequest request)
         {
-            var result = await _unitOfWork.PassengerRepository.CreateAsync(passenger);
-            await _unitOfWork.SaveAsync();
+            var result = await _passengerService.GetPassengersByFlightNumber(request);
 
-            return Created(string.Format(Location, result.Id), result);
+            return Ok(result);
         }
 
-        [HttpGet]
+        [HttpGet("GetPassenger")]
         public async Task<IActionResult> GetPassenger()
         {
             var fixture = new Fixture();
@@ -80,7 +79,6 @@ namespace AirportApp.WebHost.Controllers
                 .With(p => p.AirportToId, airportTo.Id)
                 .With(p => p.AirportTo, airportTo)
                 .With(p => p.Tickets, tickets)
-                .With(p => p.AircraftId, aircraft.Id)
                 .With(p => p.Aircraft, aircraft)
                 .Create();
 

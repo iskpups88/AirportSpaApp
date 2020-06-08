@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirportApp.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200606155457_Init")]
-    partial class Init
+    [Migration("20200608155711_DateDeleted")]
+    partial class DateDeleted
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,9 +27,6 @@ namespace AirportApp.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("FlightId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Identifier")
                         .IsRequired()
@@ -132,9 +129,6 @@ namespace AirportApp.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AirportId")
-                        .HasColumnType("int");
-
                     b.Property<int>("AirportMemberId")
                         .HasColumnType("int");
 
@@ -146,9 +140,7 @@ namespace AirportApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AirportMemberId");
-
-                    b.HasIndex("AirportId", "AirportMemberId", "StartDate", "EndDate")
+                    b.HasIndex("AirportMemberId", "StartDate", "EndDate")
                         .IsUnique();
 
                     b.ToTable("AirportMemberSchedules");
@@ -161,10 +153,11 @@ namespace AirportApp.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AircraftId")
-                        .HasColumnType("int");
+                    b.Property<string>("AirCompany")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("AircraftId1")
+                    b.Property<int>("AircraftId")
                         .HasColumnType("int");
 
                     b.Property<int>("AirportFromId")
@@ -176,9 +169,6 @@ namespace AirportApp.Data.Migrations
                     b.Property<DateTime>("Arrival")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("Departure")
                         .HasColumnType("datetime2");
 
@@ -188,13 +178,13 @@ namespace AirportApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AircraftId1");
+                    b.HasIndex("AircraftId");
 
                     b.HasIndex("AirportFromId");
 
                     b.HasIndex("AirportToId");
 
-                    b.HasIndex("FlightNumber", "Date")
+                    b.HasIndex("FlightNumber", "Departure", "Arrival")
                         .IsUnique();
 
                     b.ToTable("Flights");
@@ -208,8 +198,10 @@ namespace AirportApp.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -278,12 +270,6 @@ namespace AirportApp.Data.Migrations
 
             modelBuilder.Entity("AirportApp.Domain.Entities.AirportMemberSchedule", b =>
                 {
-                    b.HasOne("AirportApp.Domain.Entities.Airport", "Airport")
-                        .WithMany()
-                        .HasForeignKey("AirportId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("AirportApp.Domain.Entities.AirportMember", "AirportMember")
                         .WithMany()
                         .HasForeignKey("AirportMemberId")
@@ -294,8 +280,10 @@ namespace AirportApp.Data.Migrations
             modelBuilder.Entity("AirportApp.Domain.Entities.Flight", b =>
                 {
                     b.HasOne("AirportApp.Domain.Entities.Aircraft", "Aircraft")
-                        .WithMany()
-                        .HasForeignKey("AircraftId1");
+                        .WithMany("Flights")
+                        .HasForeignKey("AircraftId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AirportApp.Domain.Entities.Airport", "AirportFrom")
                         .WithMany("Flights")

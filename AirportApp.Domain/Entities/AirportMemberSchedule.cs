@@ -13,11 +13,6 @@ namespace AirportApp.Domain.Entities
         public DateTime EndDate { get; set; }
 
         [Required]
-        public int AirportId { get; set; }
-
-        public Airport Airport { get; set; }
-
-        [Required]
         public int AirportMemberId { get; set; }
 
         public AirportMember AirportMember { get; set; }
