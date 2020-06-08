@@ -6,6 +6,6 @@ namespace AirportApp.Domain.Abstractions
 {
     public interface IPassengerRepository : IRepository<Passenger>
     {
-        Task<Page<Passenger>> GetPassengersByFlightNumber(PassengersByFlightNumberRequest request);
+        Task<Page<Passenger>> GetPassengersByFlightNumber(ByFlightNumberRequest request);
     }
 }

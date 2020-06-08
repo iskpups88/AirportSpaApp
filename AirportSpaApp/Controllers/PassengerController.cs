@@ -21,7 +21,7 @@ namespace AirportSpaApp.Controllers
         }
 
         [HttpGet("byFlightNumber")]
-        public async Task<IActionResult> Get([FromQuery] PassengersByFlightNumberRequest request)
+        public async Task<IActionResult> Get([FromQuery] ByFlightNumberRequest request)
         {
             var result = await _passengerService.GetPassengersByFlightNumber(request);
 

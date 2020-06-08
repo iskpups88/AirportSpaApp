@@ -2,17 +2,17 @@ import React from 'react';
 import { Route } from 'react-router';
 import { Layout } from './components/Layout';
 import FlightInfo from './containers/FlightInfo';
-import { Counter } from './components/Counter';
 import PassengerInfo from './containers/PassengerInfo';
 
 import './custom.css'
+import AircraftMemberInfo from './containers/AircraftMemberInfo';
 
 
 const App = () => {
     return (
         <Layout>
             <Route exact path='/' component={PassengerInfo} />
-            {/* <Route path='/counter' component={Counter} /> */}
+            <Route path='/aircraftMembers' component={AircraftMemberInfo} />
             <Route path='/flights' component={FlightInfo} />
         </Layout>
     );

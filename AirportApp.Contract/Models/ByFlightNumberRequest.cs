@@ -1,6 +1,6 @@
 namespace AirportApp.Contract.Models
 {
-    public class PassengersByFlightNumberRequest : PageRequest
+    public class ByFlightNumberRequest : PageRequest
     {
         public string FlightNumber { get; set; }
     }

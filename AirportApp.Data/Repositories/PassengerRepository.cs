@@ -18,7 +18,7 @@ namespace AirportApp.Data.Repositories
         {
         }
 
-        public async Task<Page<Passenger>> GetPassengersByFlightNumber(PassengersByFlightNumberRequest request)
+        public async Task<Page<Passenger>> GetPassengersByFlightNumber(ByFlightNumberRequest request)
         {
             var passengers = await DbSet
                 .Include(p => p.Ticket)

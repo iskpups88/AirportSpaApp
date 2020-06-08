@@ -3,7 +3,7 @@ import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/sty
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-import Buffer from '../common/Buffer'
+import Buffer from './Buffer'
 import { PassengerFilterModel } from '../../models/Passenger';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -15,12 +15,12 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-interface PassengerFilterProps {
+interface FlightNumberFilterProps {
     filter: PassengerFilterModel;
     onChangeFilter: (state: PassengerFilterModel) => void;
 }
 
-const PassengerFilter: React.FC<PassengerFilterProps> = (props) => {
+const FlightNumberFilter: React.FC<FlightNumberFilterProps> = (props) => {
     const classes = useStyles({});
     const [filter, setFilter] = useState<PassengerFilterModel>(props.filter);
 
@@ -52,7 +52,6 @@ const PassengerFilter: React.FC<PassengerFilterProps> = (props) => {
             <Buffer />
         </React.Fragment>
     );
-
 }
 
-export default PassengerFilter;
+export default FlightNumberFilter;

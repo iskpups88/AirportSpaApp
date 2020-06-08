@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -7,22 +7,22 @@ import TableRow from '@material-ui/core/TableRow';
 import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
 
-import { PassengerFilterModel, Passenger } from '../../models/Passenger';
-import { PageSizeRecords } from '../../models/Common';
+import { PageSizeRecords } from "../../models/Common";
 import Loadable from "../common/Loadable";
-import PassengerItem from './PassengerItem';
-import FlightNumberFilter from '../common/FlightNumberFilter';
+import { AircraftMember, AircraftMemberFilterModel } from '../../models/AircraftMember';
+import AircraftMemberItem from './AircraftMemberItem';
+import ByFlightNumberFilter from '../common/FlightNumberFilter';
 
-interface PassengerListProps {
-    data: PageSizeRecords<Passenger>;
+interface AircraftMemberListProps {
+    data: PageSizeRecords<AircraftMember>;
     loading: boolean;
     onChangePage: (pageNumber: number) => void;
     onChangeRowsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    filter: PassengerFilterModel;
-    onChangeFilter: (state: PassengerFilterModel) => void;
+    filter: AircraftMemberFilterModel;
+    onChangeFilter: (state: AircraftMemberFilterModel) => void;
 }
 
-const PassengerList: React.FC<PassengerListProps> = (props) => {
+const AircraftMemberList: React.FC<AircraftMemberListProps> = (props) => {
     let totalCount = 0;
     let currentPage = 0;
 
@@ -36,7 +36,7 @@ const PassengerList: React.FC<PassengerListProps> = (props) => {
 
     return (
         <React.Fragment>
-            <FlightNumberFilter
+            <ByFlightNumberFilter
                 filter={props.filter}
                 onChangeFilter={props.onChangeFilter} />
             <Loadable isLoading={props.loading}>
@@ -47,17 +47,12 @@ const PassengerList: React.FC<PassengerListProps> = (props) => {
                                 <TableCell>Фамилия</TableCell>
                                 <TableCell>Имя</TableCell>
                                 <TableCell>Отчество</TableCell>
-                                <TableCell>Дата рождения</TableCell>
-                                <TableCell>Серия паспорта</TableCell>
-                                <TableCell>Номер паспорта</TableCell>
-                                <TableCell>Место</TableCell>
-                                <TableCell>Класс</TableCell>
-                                <TableCell>Стоимость билета</TableCell>
+                                <TableCell>Звание</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {props.data.records.map((record: Passenger) =>
-                                <PassengerItem
+                            {props.data.records.map((record: AircraftMember) =>
+                                <AircraftMemberItem
                                     key={record.id}
                                     record={record}
                                 />
@@ -82,6 +77,7 @@ const PassengerList: React.FC<PassengerListProps> = (props) => {
             </Loadable>
         </React.Fragment>
     );
-}
+};
 
-export default PassengerList;
+export default AircraftMemberList;
+

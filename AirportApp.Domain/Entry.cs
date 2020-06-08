@@ -10,6 +10,7 @@ namespace AirportApp.Domain
         {
             services.AddScoped<IFlightService, FlightService>();
             services.AddScoped<IPassengerService, PassengerService>();
+            services.AddScoped<IAircraftService, AircraftService>();
 
             return services;
         }

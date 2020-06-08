@@ -4,8 +4,8 @@ using AirportApp.Domain.Entities;
 
 namespace AirportApp.Domain.Interfaces
 {
-    public interface IPassengerService
+    public interface IAircraftService
     {
-        Task<Page<Passenger>> GetPassengersByFlightNumber(ByFlightNumberRequest request);
+        Task<Page<AircraftMember>> GetAircraftMembersByFlightNumber(ByFlightNumberRequest request);
     }
 }

@@ -8,6 +8,8 @@ namespace AirportApp.Domain.Abstractions
 
         IFlightRepository FlightRepository { get; }
 
+        IAircraftMemberRepository AircraftMemberRepository { get; }
+
         Task SaveAsync();
     }
 }

@@ -4,8 +4,7 @@ import { cleanObject, toSearchParams, getFormattedDateRange } from './Utils';
 import { Flight, FlightFilterModel } from "../models/Flight";
 import { PageSizeRecords } from "../models/Common";
 import { Passenger } from '../models/Passenger';
-
-const BASE_URL = '/api/v1';
+import { AircraftMember } from '../models/AircraftMember';
 
 export function getFlight<T = PageSizeRecords<Flight>>(pageNumber: number, pageSize: number, filter: FlightFilterModel): Promise<T> {
     const flightNumber = filter.flightNumber ? filter.flightNumber : null;
@@ -25,23 +24,7 @@ export function getFlight<T = PageSizeRecords<Flight>>(pageNumber: number, pageS
         'completed': filter.completed
     };
 
-    const params = '?' + toSearchParams(cleanObject(data));
-
-    const url = `${BASE_URL}/flight${params}`;
-
-    const method = 'GET';
-
-    return fetch(url,
-        {
-            method,
-            credentials: 'include',
-        })
-        .then(response => {
-            if (!response.ok)
-                throw new Error(response.statusText);
-
-            return response.json();
-        });
+    return apiGet<T>("flight", data);
 }
 
 export function getPassengers<T = PageSizeRecords<Passenger>>(pageNumber: number, pageSize: number, flightNumber: string): Promise<T> {
@@ -52,21 +35,17 @@ export function getPassengers<T = PageSizeRecords<Passenger>>(pageNumber: number
         'flightNumber': flightNumber
     };
 
-    const params = '?' + toSearchParams(cleanObject(data));
-
-    const url = `${BASE_URL}/passenger/byFlightNumber${params}`;
-
-    const method = 'GET';
-
-    return fetch(url,
-        {
-            method,
-            credentials: 'include',
-        })
-        .then(response => {
-            if (!response.ok)
-                throw new Error(response.statusText);
-
-            return response.json();
-        });
+    return apiGet<T>("passenger/byFlightNumber", data);
 }
+
+export function getAircraftMembers<T = PageSizeRecords<AircraftMember>>(pageNumber: number, pageSize: number, flightNumber: string): Promise<T> {
+
+    const data = {
+        'pageNumber': pageNumber,
+        'pageSize': pageSize,
+        'flightNumber': flightNumber
+    };
+
+    return apiGet<T>("aircraftMember/byFlightNumber", data);
+}
+

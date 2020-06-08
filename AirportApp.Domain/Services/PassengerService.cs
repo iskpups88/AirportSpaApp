@@ -15,7 +15,7 @@ namespace AirportApp.Domain.Services
             _passengerRepository = unitOfWork.PassengerRepository;
         }
 
-        public async Task<Page<Passenger>> GetPassengersByFlightNumber(PassengersByFlightNumberRequest request)
+        public async Task<Page<Passenger>> GetPassengersByFlightNumber(ByFlightNumberRequest request)
         {
             return await _passengerRepository.GetPassengersByFlightNumber(request);
         }
