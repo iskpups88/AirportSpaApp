@@ -26,8 +26,8 @@ const AircraftMemberList: React.FC<AircraftMemberListProps> = (props) => {
     let totalCount = 0;
     let currentPage = 0;
 
-    if (props.data.total && props.data.size) {
-        totalCount = props.data.total * props.data.size;
+    if (props.data.totalPages && props.data.size) {
+        totalCount = props.data.totalPages * props.data.size;
     }
 
     if (props.data.number) {
